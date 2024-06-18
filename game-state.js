@@ -16,4 +16,5 @@ export const state = {
     KeyW: false,
     Space: false,
   },
+  score: 0,
 };

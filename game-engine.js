@@ -1,32 +1,50 @@
 import { state, state as wizard } from "./game-state.js";
+import{factory}from "./game-objects.js";
 import { config } from "./game-config.js";
+
+const gameScore = document.querySelector(".game-score");
 
 // Game frames
 function newFrame() {
+  //Move wizard
   modifyWizardPosition();
+
+  //Apply score
+  state.score += config.timePoints;
+  gameScore.textContent = state.score + " points";
+  
   //Game over check
   if (!wizard.isGameOver) {
     window.requestAnimationFrame(newFrame);
-    }
-    }
-    function modifyWizardPosition() {
-   
-      const wizardElement = document.querySelector(".wizard");
-const gameArea= document.querySelector(".game-area");
+  }
+}
 
+//TODO: FIX acceleration on diagonals
+function modifyWizardPosition() {
+  const wizardElement = document.querySelector(".wizard");
+  const gameArea = document.querySelector(".game-area");
 
-const {wizard} = state;
-  if (state.controls.KeyA && wizard.x>0) {
-    wizardElement.style.left = `${wizard.x -= config.speed}px`;
+  const { wizard } = state;
+  if (state.controls.KeyA && wizard.x > 0) {
+    wizardElement.style.left = `${(wizard.x -= config.speed)}px`;
   }
   if (state.controls.KeyD && wizard.x + wizard.width < gameArea.offsetWidth) {
-    wizardElement.style.left = `${wizard.x += config.speed}px`;
+    wizardElement.style.left = `${(wizard.x += config.speed)}px`;
   }
   if (state.controls.KeyW && wizard.y > 0) {
-    wizardElement.style.top = `${wizard.y -= config.speed}px`;
+    wizardElement.style.top = `${(wizard.y -= config.speed)}px`;
   }
   if (state.controls.KeyS && wizard.y + wizard.height < gameArea.offsetHeight) {
-    wizardElement.style.top = `${wizard.y += config.speed}px`;
+    wizardElement.style.top = `${(wizard.y += config.speed)}px`;
+  }
+  if (state.controls.Space) {
+    wizardElement.style.backgroundImage='url("images/mage-deffence.png")';
+
+    //create fireBall
+    factory.createFireBall(wizard);
+
+  }else{
+    wizardElement.style.backgroundImage='url("images/mage-attack.png")';
   }
 }
 
