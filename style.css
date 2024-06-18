@@ -1,0 +1,44 @@
+body {
+  font-family: consolas;
+  /* font-size: 18px; */
+  margin: 0;
+  h1 {
+    margin: 0;
+  }
+
+  .game-score{
+  background-color: rgba(30,30,30,0.5);
+  color: white;
+  text-align: right;
+  padding: 10px;
+  }
+}
+.game-section {
+  width: 100vw;
+  height: 100vh;
+  background: linear-gradient(#22deff, #ddfaff);
+}
+
+.hidden {
+  display: none;
+}
+
+.game-over,
+.game-start {
+  position: absolute;
+  font-size: 2em;
+  text-align: center;
+  margin-top: 10%;
+  background-color: rgb(135, 239, 38);
+  top: 30%;
+  left: 50%;
+  transform: translate(-50%);
+  padding: 10px 30px;
+  border-radius:20px;
+  cursor: pointer;
+}
+
+.game-over {
+    background: linear-gradient(#22deff, #ddfaff);
+}
+
