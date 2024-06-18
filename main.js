@@ -1,72 +1,88 @@
-//Game initialization (Game state)
+// Game initialization (Game state)
 
 // State initialization
-
 const state = {
-  player: " Melwin",
+  player: "Melwin",
   wizard: {
     x: 100,
     y: 100,
     width: 150,
     height: 150,
   },
+  isGameOver: false,
+  points: 0,
+  controls: {
+    KeyA:false,
+    KeyS:false,
+    KeyD:false,
+    KeyW:false,
+    Space:false,
+  }
 };
+    
 
-//Game object creation
+
+// Game object creation
 const gameArea = document.querySelector(".game-area");
 const factory = {
-  createWizzard(wizard) {
-    //create Element
-    const wizzardElement = document.createElement("div");
-    wizzardElement.classList.add('wizzard')
+  createWizard(wizard) {
+    // create Element
+    const wizardElement = document.createElement("div");
+    wizardElement.classList.add("wizard");
 
-    //set Styles
-    wizzardElement.style.width = wizard.width + "px";
-    wizzardElement.style.height = wizard.height + "px";
-    wizzardElement.style.backgroundImage = 'url("images/mage.png")';
-    wizzardElement.style.backgroundSize = "contain";
-    wizzardElement.style.backgroundRepeat = "no-repeat";
-    wizzardElement.style.backgroundPosition = "center";
+    // set Styles
+    wizardElement.style.width = wizard.width + "px";
+    wizardElement.style.height = wizard.height + "px";
+    wizardElement.style.backgroundImage = 'url("images/mage.png")';
+    wizardElement.style.backgroundSize = "contain";
+    wizardElement.style.backgroundRepeat = "no-repeat";
+    wizardElement.style.backgroundPosition = "center";
 
-    //set position
-    wizzardElement.style.position = "absolute";
-    wizzardElement.style.left = wizard.x + "px";
-    wizzardElement.style.top = wizard.y + "px";
+    // set position
+    wizardElement.style.position = "absolute";
+    wizardElement.style.left = wizard.x + "px";
+    wizardElement.style.top = wizard.y + "px";
 
-    //add class
-    wizzardElement.classList.add("wizzard");
-    //attached to DOM
-    gameArea.appendChild(wizzardElement);
+    // attach to DOM
+    gameArea.appendChild(wizardElement);
   },
 };
 
-//Input control
+// Input control
+document.addEventListener("keydown", (e) => {
 
-//Game loop
-window.requestAnimationFrame(newFrame)
+  if(state.controls.hasOwnProperty(e.code)){
+    state.controls[e.code] = true; // само ако са натиснати бутони ги смени на true
+  }
+});
 
-//Game frames
+document.addEventListener("keyup", (e) => {
+  if(state.controls.hasOwnProperty(e.code)){
+    state.controls[e.code] = false;
+  }
+});
+
+// Game loop
 function newFrame() {
- 
-  
-const wizzardElement=document.querySelector('.wizzard');
-wizzardElement.style.left= `${state.wizard.x++}px`;
+  console.log(state.controls);
+  const wizardElement = document.querySelector(".wizard");
+  if (wizardElement) {
+    wizardElement.style.left = `${state.wizard.x++}px`;
+  }
 
-
-window.requestAnimationFrame(newFrame)
-
+  if (!state.isGameOver) {
+    window.requestAnimationFrame(newFrame);
+  }
 }
 
 const startElement = document.querySelector(".game-start");
 startElement.addEventListener("click", (e) => {
-  //Hide start element
+  // Hide start element
   e.currentTarget.classList.add("hidden");
 
-  
-  
-  //Initialize game
-  factory.createWizzard(state.wizard);
+  // Initialize game
+  factory.createWizard(state.wizard);
 
-  //Game start
-  window.requestAnimationFrame(newFrame)
+  // Start game loop
+  window.requestAnimationFrame(newFrame);
 });
