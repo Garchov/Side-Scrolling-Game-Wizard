@@ -2,6 +2,11 @@ const gameArea = document.querySelector(".game-area");
 
 export const factory = {
   createWizard(wizard) {
+    //check cooldown
+    if (wizard.lastMagicUsed + wizard.cooldown > Date.now()) {
+      return;
+    }
+
     // Create Element
     const wizardElement = document.createElement("div");
     wizardElement.classList.add("wizard");
@@ -19,35 +24,33 @@ export const factory = {
     wizardElement.style.left = wizard.x + "px";
     wizardElement.style.top = wizard.y + "px";
 
+    //modify wizard
+    wizard.lastMagicUse = Date.now();
+
     // Attach to DOM
     gameArea.appendChild(wizardElement);
   },
   createFireBall(wizard) {
     //create element
 
-    const fireballElement= document.createElement("div");
-    fireballElement.classList.add("fireball");  
+    const fireballElement = document.createElement("div");
+    fireballElement.classList.add("fireball");
 
     //style
-    
-     fireballElement.style.backgroundImage= 'url("images/fire-ball.png")';
-     fireballElement.style.backgroundSize="contain";
-     fireballElement.style.backgroundRepeat="no-repeat";
-     fireballElement.style.backgroundPosition="center";
-     fireballElement.style.width="50px";
-     fireballElement.style.height="50px";
-     fireballElement.style.position="absolute";
- 
-    
-    
 
-//position
-fireballElement.style.left=wizard.x + wizard.width + 'px';
-fireballElement.style.top=wizard.x + wizard.width /2 + 'px' ;
+    fireballElement.style.backgroundImage = 'url("images/fire-ball.png")';
+    fireballElement.style.backgroundSize = "contain";
+    fireballElement.style.backgroundRepeat = "no-repeat";
+    fireballElement.style.backgroundPosition = "center";
+    fireballElement.style.width = "50px";
+    fireballElement.style.height = "50px";
+    fireballElement.style.position = "absolute";
+
+    //position
+    fireballElement.style.left = wizard.x + wizard.width + "px";
+    fireballElement.style.top = wizard.x + wizard.width / 2 + "px";
 
     // add to Dom
     gameArea.appendChild(fireballElement);
-    
-
-  }
-}
+  },
+};

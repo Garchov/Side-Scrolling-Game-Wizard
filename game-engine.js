@@ -3,11 +3,26 @@ import{factory}from "./game-objects.js";
 import { config } from "./game-config.js";
 
 const gameScore = document.querySelector(".game-score");
+const gameArea = document.querySelector(".game-area");
 
 // Game frames
 function newFrame() {
   //Move wizard
   modifyWizardPosition();
+
+  //Modify fireballs
+
+  const fireBalls=document.querySelectorAll('.fireball');
+  for (const fireBall of fireBalls) {
+
+    if(fireBall.offsetLeft >gameArea.offsetWidth){
+     fireBall.remove();
+    }else{
+
+      fireBall.style.left = fireBall.offsetLeft + config.magicSpeed+"px";
+    }
+    
+  }
 
   //Apply score
   state.score += config.timePoints;
@@ -22,7 +37,6 @@ function newFrame() {
 //TODO: FIX acceleration on diagonals
 function modifyWizardPosition() {
   const wizardElement = document.querySelector(".wizard");
-  const gameArea = document.querySelector(".game-area");
 
   const { wizard } = state;
   if (state.controls.KeyA && wizard.x > 0) {
