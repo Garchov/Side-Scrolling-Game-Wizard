@@ -12,33 +12,25 @@ body {
   min-height: 100%;
   width: auto;
   height: auto;
-  z-index: -1; /* Send the video to the back */
+  z-index: -1;
   background-size: cover;
 }
 
-#background-music {
-  position: fixed;
-  bottom: 10px;
-  left: 10px;
-  z-index: 2;
-  display: block; /* Add this line for testing */
+.game-over,
+.game-start {
+  font-family: 'Gothic', sans-serif;
+  font-size: 24px;
+  color: #ffffff;
+  background-color: #333333;
+  padding: 20px;
+  text-align: center;
+  border: 2px solid #000000;
+  border-radius: 10px;
+  cursor: pointer;
 }
 
-
-
-
-.game-section {
-  position: relative;
-  z-index: 1;
-  width: 100vw;
-  height: 100vh;
-}
-
-.game-score {
-  position: absolute;
-  background-color: rgba(30,30,30,0.5);
-  color: white;
-  right: 0;
+.game-over:hover {
+  background: linear-gradient(#480e0e);
 }
 
 .hidden {
@@ -49,22 +41,45 @@ body {
   height: 100vh;
   overflow: hidden;
 }
-
-.game-over,
-.game-start {
-  position: absolute;
-  font-size: 2em;
+.experience-gain {
+  font-family: 'Gothic', sans-serif;
+  font-size: 18px;
+  color: #ffffff;
+  background-color: #333333;
+  padding: 10px;
   text-align: center;
-  margin-top: 10%;
-  background-color: rgb(163, 25, 25);
-  top: 30%;
-  left: 50%;
-  transform: translate(-50%);
-  padding: 10px 30px;
-  border-radius: 20px;
-  cursor: pointer;
+  border: 2px solid #000000;
+  border-radius: 5px;
+  position: absolute;
+  z-index: 100;
+  transition: opacity 0.5s ease;
 }
 
-.game-over {
-  background: linear-gradient(#22deff, #ddfaff);
+.experience-gain.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+@keyframes experienceGainAnimation {
+  0% { transform: translateY(0); opacity: 1; }
+  50% { transform: translateY(-30px); opacity: 1; }
+  100% { transform: translateY(-60px); opacity: 0; }
+}
+
+.experience-gain {
+  font-family: 'Gothic', sans-serif;
+  font-size: 18px;
+  color: #ffffff;
+  background-color: #333333;
+  padding: 10px;
+  text-align: center;
+  border: 2px solid #000000;
+  border-radius: 5px;
+  position: absolute;
+  z-index: 100;
+  animation: experienceGainAnimation 1s ease;
+}
+
+.experience-gain.hidden {
+  display: none;
 }

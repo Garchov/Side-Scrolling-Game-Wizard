@@ -1,3 +1,4 @@
+
 const backgroundMusic = document.getElementById('background-music');
 
 backgroundMusic.play()

@@ -1,92 +1,89 @@
-const gameArea = document.querySelector(".game-area");
+import { state } from "./game-state.js";
 
-// Get the audio element
+const gameArea = document.querySelector(".game-area");
 const fireballSound = document.getElementById("fireball-sound");
+const experienceGain = document.querySelector(".experience-gain");
 
 export const factory = {
-  createWizard(wizard) {
-    //check cooldown
-    if (wizard.lastMagicUsed + wizard.cooldown > Date.now()) {
-      return;
-    }
+    createWizard(wizard) {
+        const wizardElement = document.createElement("div");
+        wizardElement.classList.add("wizard");
+        wizardElement.style.width = wizard.width + "px";
+        wizardElement.style.height = wizard.height + "px";
+        wizardElement.style.backgroundImage = 'url("images/mage.png")';
+        wizardElement.style.backgroundSize = "contain";
+        wizardElement.style.backgroundRepeat = "no-repeat";
+        wizardElement.style.backgroundPosition = "center";
+        wizardElement.style.position = "absolute";
+        wizardElement.style.left = wizard.x + "px";
+        wizardElement.style.top = wizard.y + "px";
+        gameArea.appendChild(wizardElement);
+    },
 
-    // Create Element
-    const wizardElement = document.createElement("div");
-    wizardElement.classList.add("wizard");
+    createFireBall(wizard) {
+        if (wizard.lastMagicUse + wizard.cooldown > Date.now()) {
+            return;
+        }
 
-    // Set Styles
-    wizardElement.style.width = wizard.width + "px";
-    wizardElement.style.height = wizard.height + "px";
-    wizardElement.style.backgroundImage = 'url("images/mage.png")';
-    wizardElement.style.backgroundSize = "contain";
-    wizardElement.style.backgroundRepeat = "no-repeat";
-    wizardElement.style.backgroundPosition = "center";
+        const fireballElement = document.createElement("div");
+        fireballElement.classList.add("fireball");
+        fireballElement.style.backgroundImage = 'url("images/fire-ball.png")';
+        fireballElement.style.backgroundSize = "contain";
+        fireballElement.style.backgroundRepeat = "no-repeat";
+        fireballElement.style.backgroundPosition = "center";
+        fireballElement.style.width = "50px";
+        fireballElement.style.height = "50px";
+        fireballElement.style.position = "absolute";
+        fireballElement.style.left = wizard.x + wizard.width + "px";
+        fireballElement.style.top = wizard.y + wizard.height / 2 - 25 + "px";
+        wizard.lastMagicUse = Date.now();
+        fireballSound.currentTime = 0;
+        fireballSound.play();
+        gameArea.appendChild(fireballElement);
+    },
 
-    // Set position
-    wizardElement.style.position = "absolute";
-    wizardElement.style.left = wizard.x + "px";
-    wizardElement.style.top = wizard.y + "px";
+    createMonsters() {
+        const dragonEl = document.createElement("div");
+        dragonEl.classList.add("dragon");
+        dragonEl.style.backgroundImage = 'url("images/red-dragon.png")';
+        dragonEl.style.backgroundSize = "contain";
+        dragonEl.style.backgroundRepeat = "no-repeat";
+        dragonEl.style.backgroundPosition = "center";
+        dragonEl.style.width = "50px";
+        dragonEl.style.height = "50px";
+        dragonEl.style.position = "absolute";
+        dragonEl.style.left = gameArea.offsetWidth + "px";
+        dragonEl.style.top = Math.random() * (gameArea.offsetHeight - 50) + "px";
+        gameArea.appendChild(dragonEl);
+    },
 
-    //modify wizard
-    wizard.lastMagicUse = Date.now();
+    addExperience(amount, dragon) {
+      state.experience += amount;
+      const experienceDisplay = document.querySelector(".experience-display");
+      if (experienceDisplay) {
+          experienceDisplay.textContent = `Experience: ${state.experience} / ${state.nextLevelExperience}`;
+      }
 
-    // Attach to DOM
-    gameArea.appendChild(wizardElement);
-  },
+      const experienceGain = document.querySelector(".experience-gain");
+      if (experienceGain) {
+          experienceGain.textContent = `+${amount} XP`;
+          experienceGain.style.left = `${dragon.offsetLeft}px`;
+          experienceGain.style.top = `${dragon.offsetTop}px`;
+          experienceGain.classList.remove("hidden");
 
-  //fucntion create Fireball
-  createFireBall(wizard) {
-    // Check cooldown
-    if (wizard.lastMagicUse + wizard.cooldown > Date.now()) {
-      return;
-    }
+          setTimeout(() => {
+              experienceGain.classList.add("hidden");
+          }, 1000);
+      }
 
-    // Create Element
-    const fireballElement = document.createElement("div");
-    fireballElement.classList.add("fireball");
-
-    // Style
-    fireballElement.style.backgroundImage = 'url("images/fire-ball.png")';
-    fireballElement.style.backgroundSize = "contain";
-    fireballElement.style.backgroundRepeat = "no-repeat";
-    fireballElement.style.backgroundPosition = "center";
-    fireballElement.style.width = "50px";
-    fireballElement.style.height = "50px";
-    fireballElement.style.position = "absolute";
-
-    // Position
-    fireballElement.style.left = wizard.x + wizard.width + "px";
-    fireballElement.style.top = wizard.y + wizard.height / 2 - 25 + "px"; // Adjusted for center alignment
-
-    // Update last magic use
-    wizard.lastMagicUse = Date.now();
-
-    // Play sound
-    fireballSound.currentTime = 0; // Reset to start
-    fireballSound.play();
-
-    // Add to DOM
-    gameArea.appendChild(fireballElement);
-  },
-
-  //create monsters
-  createMonsters() {
-    const dragonEl = document.createElement("div");
-    dragonEl.classList.add("dragon");
-
-    // Style
-    dragonEl.style.backgroundImage = 'url("images/red-dragon.png")';
-    dragonEl.style.backgroundSize = "contain";
-    dragonEl.style.backgroundRepeat = "no-repeat";
-    dragonEl.style.backgroundPosition = "center";
-    dragonEl.style.width = "50px";
-    dragonEl.style.height = "50px";
-    dragonEl.style.position = "absolute";
-
-//set positions
-    dragonEl.style.left = gameArea.offsetWidth + "px";
-    dragonEl.style.top = Math.random() * (gameArea.offsetHeight - 50) + "px";
-
-    gameArea.appendChild(dragonEl);
+      if (state.experience >= state.nextLevelExperience) {
+          state.level++;
+          state.experience -= state.nextLevelExperience;
+          state.nextLevelExperience += 5000;
+          const levelDisplay = document.querySelector(".level-display");
+          if (levelDisplay) {
+              levelDisplay.textContent = `Level: ${state.level}`;
+          }
+      }
   },
 };
