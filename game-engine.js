@@ -26,13 +26,21 @@ function newFrame() {
   dragons.forEach((dragon) => {
     if (dragon.offsetLeft < 0) {
       return dragon.remove();
+      
     }
 
     const hasCollision = checkCollision(wizardElement, dragon);
     if (hasCollision) {
       state.isGameOver = true;
-      document.querySelector(".game-over").classList.remove("hidden");
-      return; // Излизаме от функцията, когато има колизия с дракона
+      const gameOverElement = document.querySelector(".game-over");
+      gameOverElement.classList.remove("hidden");
+
+      window.cancelAnimationFrame(newFrame);
+      gameArea.append(gameOverElement).addEventListener("click", () => {
+        location.reload();
+      });
+
+    
     }
 
     fireBalls.forEach((fireBall) => {
@@ -46,9 +54,10 @@ function newFrame() {
     dragon.style.left = dragon.offsetLeft - config.dragonSpeed + "px";
   });
 
+  state.score += config.timePoints;
+  gameScore.textContent = state.score + " points";
+
   if (!state.isGameOver) {
-    state.score += config.timePoints;
-    gameScore.textContent = state.score + " points";
     window.requestAnimationFrame(newFrame);
   }
 }

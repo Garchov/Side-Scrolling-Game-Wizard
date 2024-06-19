@@ -83,3 +83,13 @@ body {
 .experience-gain.hidden {
   display: none;
 }
+
+.experience-gain {
+  font-family: 'Gothic', sans-serif; /* Използвайте готически шрифт или подходящ шрифт */
+  font-size: 18px;
+  color: #ffffff; /* Бял текст */
+  position: absolute; /* Абсолютно позициониране */
+  border-radius: 5px; /* Закръгленост на ъглите */
+  padding: 5px 10px; /* Подходящ вътрешен padding */
+  background-color: rgba(0, 0, 0, 0.7); /* Полупрозрачен тъмно сив фон */
+}
