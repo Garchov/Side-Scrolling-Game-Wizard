@@ -18,4 +18,7 @@ export const state = {
     KeyW: false,
     Space: false,
   },
+  dragonSpawn: 0,
+ maxDragonSpawnTime: 20000,
+
 };

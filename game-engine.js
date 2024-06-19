@@ -23,8 +23,21 @@ function newFrame() {
     }
     
   }
-  
+  //create Monsters
+  if(state.dragonSpawn + state.maxDragonSpawnTime * Math.random()< Date.now()) {
   factory.createMonsters();
+  state.dragonSpawn
+  }
+
+  //move dragons
+  const dragons=document.querySelectorAll('.dragon');
+  dragons.forEach((dragon) => {
+    if(dragon.offsetLeft <0){
+     return dragon.remove();
+  
+    }
+    dragon.style.left = dragon.offsetLeft - config.dragonSpeed + "px";
+  });
 
   //Apply score
   state.score += config.timePoints;
@@ -36,7 +49,7 @@ function newFrame() {
   }
 }
 
-//TODO: FIX acceleration on diagonals
+//TODO: FIX acceleration on diagonalsø
 function modifyWizardPosition() {
   const wizardElement = document.querySelector(".wizard");
 
