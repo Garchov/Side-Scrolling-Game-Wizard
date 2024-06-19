@@ -23,6 +23,8 @@ function newFrame() {
     }
     
   }
+  
+  factory.createMonsters();
 
   //Apply score
   state.score += config.timePoints;

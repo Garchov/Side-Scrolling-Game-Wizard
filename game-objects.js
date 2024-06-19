@@ -34,10 +34,8 @@ export const factory = {
     gameArea.appendChild(wizardElement);
   },
 
-  
   //fucntion create Fireball
   createFireBall(wizard) {
-    
     // Check cooldown
     if (wizard.lastMagicUse + wizard.cooldown > Date.now()) {
       return;
@@ -63,11 +61,32 @@ export const factory = {
     // Update last magic use
     wizard.lastMagicUse = Date.now();
 
-      // Play sound
-      fireballSound.currentTime = 0; // Reset to start
-      fireballSound.play();
+    // Play sound
+    fireballSound.currentTime = 0; // Reset to start
+    fireballSound.play();
 
     // Add to DOM
     gameArea.appendChild(fireballElement);
+  },
+
+  //create monsters
+  createMonsters() {
+    const dragonEl = document.createElement("div");
+    dragonEl.classList.add("dragon");
+
+    // Style
+    dragonEl.style.backgroundImage = 'url("images/red-dragon.png")';
+    dragonEl.style.backgroundSize = "contain";
+    dragonEl.style.backgroundRepeat = "no-repeat";
+    dragonEl.style.backgroundPosition = "center";
+    dragonEl.style.width = "50px";
+    dragonEl.style.height = "50px";
+    dragonEl.style.position = "absolute";
+
+//set positions
+    dragonEl.style.left = gameArea.offsetWidth + "px";
+    dragonEl.style.top = Math.random() * (gameArea.offsetHeight - 50) + "px";
+
+    gameArea.appendChild(dragonEl);
   },
 };
