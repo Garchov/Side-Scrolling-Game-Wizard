@@ -7,6 +7,12 @@
     <title>Softuni Wizard 2024</title>
 </head>
 <body>
+    <!-- Video background -->
+    <video id="background-video" muted>
+        <source src="video/ Night_Sky_Loop.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+
     <!-- game screen -->
     <div class="game-section">
         <!-- score -->
@@ -24,9 +30,19 @@
         </div>
     </div>
     <!-- game screen end -->
-    <script type="module" src="main.js"></script>
-<!-- Sound effect -->
-<audio id="fireball-sound" src="sounds/Fireball_Magic_Attack_Sound_Effect.mp3"></audio>
 
+    <!-- Sound effect -->
+    <audio id="fireball-sound" src="sounds/Fireball_Magic_Attack_Sound_Effect.mp3"></audio>
+
+    <!-- Background music -->
+    <audio id="background-music" loop>
+        <source src="sounds/Nexus _WOW_background.mp3" type="audio/mp3">
+        Your browser does not support the audio tag.
+    </audio>
+
+    <!-- Include your scripts -->
+    <script type="module" src="main.js"></script>
+    <script src="video_and_music-control.js"></script>
+    <script src="game-controls.js"></script> <!-- Include your game controls script -->
 </body>
 </html>

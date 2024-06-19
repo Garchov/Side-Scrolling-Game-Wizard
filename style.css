@@ -1,31 +1,53 @@
 body {
   font-family: consolas;
-  /* font-size: 18px; */
   margin: 0;
-  h1 {
-    margin: 0;
-  }
+  overflow: hidden;
+}
 
-  .game-score{
-    position: absolute;
+#background-video {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  min-width: 100%;
+  min-height: 100%;
+  width: auto;
+  height: auto;
+  z-index: -1; /* Send the video to the back */
+  background-size: cover;
+}
+
+#background-music {
+  position: fixed;
+  bottom: 10px;
+  left: 10px;
+  z-index: 2;
+  display: block; /* Add this line for testing */
+}
+
+
+
+
+.game-section {
+  position: relative;
+  z-index: 1;
+  width: 100vw;
+  height: 100vh;
+}
+
+.game-score {
+  position: absolute;
   background-color: rgba(30,30,30,0.5);
   color: white;
   right: 0;
-  }
-}
-.game-section {
-  width: 100vw;
-  height: 100vh;
-  background: linear-gradient(#22deff, #ddfaff);
 }
 
 .hidden {
   display: none;
 }
+
 .game-area {
   height: 100vh;
   overflow: hidden;
-
 }
 
 .game-over,
@@ -34,16 +56,15 @@ body {
   font-size: 2em;
   text-align: center;
   margin-top: 10%;
-  background-color: rgb(135, 239, 38);
+  background-color: rgb(163, 25, 25);
   top: 30%;
   left: 50%;
   transform: translate(-50%);
   padding: 10px 30px;
-  border-radius:20px;
+  border-radius: 20px;
   cursor: pointer;
 }
 
 .game-over {
-    background: linear-gradient(#22deff, #ddfaff);
+  background: linear-gradient(#22deff, #ddfaff);
 }
-
