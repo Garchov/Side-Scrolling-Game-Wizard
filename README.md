@@ -1,2 +1,2 @@
 # Side-Scrolling-Game-Wizard
-JS Advanced Course Workshop @SoftUni
+JS Advanced Course Workshop Exercise @SoftUni
